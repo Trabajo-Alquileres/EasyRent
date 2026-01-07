@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use App\Contracts\FormSchemaInterface;
 use Illuminate\Support\ServiceProvider;
+use App\Models\FormSchema;
+use App\Models\FormStep;
+use App\Observers\FormSchemaObserver;
+use App\Observers\FormStepObserver;
+use App\Repositories\FormSchemaRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +17,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+         $this->app->bind(
+            FormSchemaInterface::class,
+            FormSchemaRepository::class
+
+         );
     }
 
     /**
@@ -19,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
     }
 }

@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('form_steps', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('form_schema_id')->constrained()->onDelete('cascade');
+            $table->ulid('id')->primary();
             $table->string('title');   // título del paso (ej: "Datos básicos")
             $table->string('slug')->unique();            // Ej: 'publicar-propiedad', 'informacion-general'
             $table->integer('order')->default(1);  // orden en el stepper (ej: 1, 2, 3)
@@ -22,6 +21,8 @@ return new class extends Migration
             $table->boolean('is_optional')->default(false);  // Si el paso es saltable
             $table->boolean('is_active')->default(true); // por si querés ocultar pasos sin borrarlos
             $table->timestamps();
+
+            $table->foreignUlid('form_schema_id')->constrained('form_schemas')->onDelete('cascade');
         });
     }
 

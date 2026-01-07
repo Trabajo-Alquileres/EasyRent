@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasSchemaVersionTrait;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FormSchema extends Model
 {
 
+    use HasUlids;
+
     protected $fillable = [
-        'name',
+        'slug',
         'title',
         'description',
         'is_active',
@@ -22,6 +26,6 @@ class FormSchema extends Model
 
     public function steps(): HasMany
     {
-        return $this->hasMany(FormStep::class);
+        return $this->hasMany(FormStep::class, 'form_schema_id');
     }
 }
